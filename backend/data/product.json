@@ -1,0 +1,126 @@
+[
+    {
+        "name": "HP Pavilion Laptop 15-eg0106TX + Free mouse (2HU82AA)",
+        "price": 157.87,
+        "description": "The Pavilion 15 Laptop packs more performance into a smaller profile, so you can get more done wherever you go. Enjoy mind-blowing entertainment with a micro-edge screen and Audio by B&O.",
+        "images": [{
+            "public_id": "Products/c06745368_1_smsw0c",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1628770713/Products/c06745368_1_smsw0c.png"
+        }],
+        "rating": "4.0",
+        "category": "Laptops",
+        "seller": "HP",
+        "stock": "150",
+        "noOfReviews": 30,
+        "reviews": []
+    },
+    {
+        "name": "Apple iPhone 12 Pro Max",
+        "price": 190.50,
+        "description": "The phone is powered by the new Apple A14 Bionic processor. The smartphone comes with a 6.7 inches Super Retina XDR OLED capacitive touchscreen, 2778 x 1284 pixels resolution and HDR display, True Tone and Wide color (P3) gamut.",
+        "images": [{
+            "public_id": "Products/iphone-12-pro-max-family-hero-all-600x600_abmlfb",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1628776983/Products/iphone-12-pro-max-family-hero-all-600x600_abmlfb.jpg"
+        }],
+        "rating": "4.5",
+        "category": "Accessories",
+        "seller": "EBay",
+        "stock": "100",
+        "noOfReviews": 145,
+        "reviews": []
+    },
+    {
+        "name": "Canon EOS R5 Mirrorless Camera With 8K Video Recording Support Launched",
+        "price": 150.0,
+        "description": "Canon EOS R5 has been launched as the company's anticipated flagship mirrorless camera. The new model, which has debuted after months of being in teasers, features an all-new 45-megapixel full-frame CMOS sensor",
+        "images": [{
+            "public_id": "Products/canon_EOS_myqo0y.webp",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1628777593/Products/canon_EOS_myqo0y.webp"
+        },
+        {
+            "public_id": "Products/canon_EOS5d_zgz0hj.jpg",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1630692142/Products/canon_EOS5d_zgz0hj.jpg"
+        }],
+        "rating": "4.5",
+        "category": "Cameras",
+        "seller": "Canon",
+        "stock": "1500",
+        "noOfReviews": 200,
+        "reviews": []
+    },
+    {
+        "name": "Black Skechers Shoes - Elite Flex - Wasik, Model Name/Number: 52649-BBK",
+        "price": 150.0,
+        "description": "Take flexibility and comfort to an entirely new level with the SKECHERS Elite Flex - Wasick shoe. Skech Knit Mesh fabric upper in a slip on sporty comfort walking and training sneaker with interwoven designs. Air Cooled Memory Foam insole, highly flexible comfort midsole.",
+        "images": [{
+            "public_id": "Products/sketchers_slfrgq.jpg",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1628778253/Products/sketchers_slfrgq.jpg"
+        }],
+        "rating": "4.0",
+        "category": "Laptops",
+        "seller": "HP",
+        "stock": "150",
+        "noOfReviews": 30,
+        "reviews": []
+    },
+    {
+        "name": "WH-1000XM4 Wireless Noise Cancelling Headphones",
+        "price": 67.5,
+        "description": "Intelligent and intuitive, the WH-1000XM4 headphones offer further improvements to our industry-leading noise cancellation1, exceptional sound quality, and smart listening that adjusts to your behavior and your location.",
+        "images": [{
+            "public_id": "Products/5d02da5df552836db894cead8a68f5f3_xomovx.webp",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1628778008/Products/5d02da5df552836db894cead8a68f5f3_xomovx.webp"
+        }],
+        "rating": "4.0",
+        "category": "Laptops",
+        "seller": "HP",
+        "stock": "150",
+        "noOfReviews": 76,
+        "reviews": []
+    },
+    {
+        "name": "Hera Braided Solo Loop Strap Compatible With Apple Watch Band 40mm",
+        "price": 327.67,
+        "description": "AirPods Pro have been designed to deliver Active Noise Cancellation for immersive sound, Transparency mode so you can hear your surroundings, and a customizable fit for all-day comfort. Just like AirPods, AirPods Pro connect magically to your iPhone or Apple Watch. And they’re ready to use right out of the case.",
+        "images": [{
+            "public_id": "Products/blk-strap_5000x_khbkqj.png",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1630413544/Products/blk-strap_5000x_khbkqj.png"
+        }],
+        "rating": "4.2",
+        "category": "Accessories",
+        "seller": "iStore",
+        "stock": "100",
+        "noOfReviews": 1126,
+        "reviews": []
+    },
+    {
+        "name": "AirPods Pro",
+        "price": 67.5,
+        "description": "Intelligent and intuitive, the WH-1000XM4 headphones offer further improvements to our industry-leading noise cancellation1, exceptional sound quality, and smart listening that adjusts to your behavior and your location.",
+        "images": [{
+            "public_id": "Products/apw1_5000x_ufliec.png",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1630413690/Products/apw1_5000x_ufliec.png"
+        }],
+        "rating": "3.7",
+        "category": "Accessories",
+        "seller": "iStore",
+        "stock": "120",
+        "noOfReviews": 176,
+        "reviews": []
+    },
+    {
+        "name": "Adjustable 14-42 TV Wall Bracket",
+        "price": 14.56,
+        "description": "Adjustable TV wall mount offers an attractive way to display TV while providing most flexible viewing experience. The arm can easily be adjusted, allowing you to enjoy in a more comfortable, ergonomically correct position. This TV wall mount can hold a TV with flat screen sizes between 14 and 42 inches.",
+        "images": [{
+            "public_id": "Products/1_3_adb542ad-6d55-46a7-8217-8b5ccc89123b_2048x2048_hlcayj.jpg",
+            "url": "https://res.cloudinary.com/bayata/image/upload/v1630413918/Products/1_3_adb542ad-6d55-46a7-8217-8b5ccc89123b_2048x2048_hlcayj.jpg"
+        }],
+        "rating": "2.5",
+        "category": "Accessories",
+        "seller": "Zitmall",
+        "stock": "1250",
+        "noOfReviews": 70,
+        "reviews": []
+    }
+]

@@ -4,27 +4,35 @@ const User = require('../models/user');
 const storeToken = require('../utils/storeToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary');
 
 //USERS.....
 
-//Create a new user         => /api/user/new
-const registerUser = async (req, res, next) => {
+//Create a new user         => /api/register
+const registerUser = async (req, res, next) => { 
+    
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'avatar',
+        width: 150,
+        crop: 'scale'
+    })
+    
     const { name, email, password } = req.body;
-
+    
     const user = await User.create({
         name,
         email,
         password,
         avatar: {
-            public_id: 'avatar/219_05_busbusiness_interviewHeader',
-            url: 'https://res.cloudinary.com/bayata/image/upload/v1629208239/avatar/219_05_busbusiness_interviewHeader_1485x1254_gozjwa.jpg'
+            public_id: result.public_id,
+            url: result.secure_url
         }
     });
 
     storeToken(user, 200, res);
 }
 
-//Route for logging in a new user           => /api/login
+//Route for logging in a user           => /api/login
 const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 

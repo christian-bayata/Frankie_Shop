@@ -3,13 +3,17 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');  
 const logger = require('./utils/logger');
+const dotenv = require('dotenv'); 
 const products = require('./routes/products');
 const user = require('./routes/user');
 const order = require('./routes/order');
 const error = require('./middlewares/errors.js');
-
+const fileUpload = require('express-fileupload');
+ 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(fileUpload());
 
 //Winston Logger
 logger();

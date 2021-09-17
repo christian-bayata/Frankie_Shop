@@ -11,18 +11,23 @@ exports.getProducts = async (req, res, next) => {
     const resPerPage = 4;
     const productCount = await Product.countDocuments()
  
-    const apiFeatures = new APIFeatures(Product.find(), req.query)
+    let apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
     .filter()
-    .pagination(resPerPage);
     
-    const products = await apiFeatures.query;
-         res.status(200).json({
-            success: true,
-            productCount,
-            resPerPage,
-            products
-         });
+    let products = await apiFeatures.query;
+    let filteredProductsCount = products.length;
+ 
+    apiFeatures.pagination(resPerPage);
+    products = await apiFeatures.query;
+
+    res.status(200).json({
+    success: true,
+    productCount,
+    resPerPage,
+    filteredProductsCount,
+    products
+    });
 };
 
 //Gets a single product from the database   =>    /api/product/id

@@ -14,14 +14,13 @@ export const ProductDetails = ({ match }) => {
     const alert = useAlert();
 
     const dispatch = useDispatch();
-
+ 
     const { loading, error, product } = useSelector(state=>state.productDetails);
 
     useEffect(() => {
         dispatch(getProductDetails(match.params.id));
 
         if(error) {
-
             dispatch(clearErrors());
         }
 

@@ -5,8 +5,8 @@ class APIFeatures {
         this.queryStr = queryStr;
     };
 //The search method
-    search() {
-        //If the keyword exists, run a $regex on the it with case sensitive option
+    search() { 
+        //If the keyword exists, run a $regex on the it with case insensitive option
         //If not, return an empty object
         const keyword = this.queryStr.keyword ? {
                name: {
@@ -35,7 +35,7 @@ class APIFeatures {
         // console.log(queryCopy);
         this.query = this.query.find(JSON.parse(queryStr));
         return this;
-    }
+    } 
 
 //The pagination method
     pagination(resPerPage) {

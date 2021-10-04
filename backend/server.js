@@ -1,14 +1,14 @@
+const dotenv = require('dotenv'); 
 const winston = require('winston');
 const app = require('./app');
 const dbConnect = require('./config/db');
-const dotenv = require('dotenv'); 
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 
 //Error handler for uncaught exceptions
 process.on('uncaughtException', (err) => {
     console.log(`ERROR: ${err.stack}`);
     console.log('Shutting down due to uncaught exception');
-});
+});  
  
 //Set up the config file
 dotenv.config({ path: "backend/config/config.env" })
@@ -17,10 +17,11 @@ dotenv.config({ path: "backend/config/config.env" })
 dbConnect();
 
 //cloudinary configuration for images
-cloudinary.config({
+cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
 })
 
 const port = process.env.PORT;

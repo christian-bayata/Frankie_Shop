@@ -1,5 +1,5 @@
 
-class APIFeatures {
+class APIFeatures { 
     constructor(query, queryStr) {
         this.query = query;
         this.queryStr = queryStr;
@@ -22,7 +22,7 @@ class APIFeatures {
     };
 //The filter method
     filter() {
-        const  queryCopy = { ...this.queryStr };
+        const  queryCopy = { ...this.queryStr }; 
 
         //Removing fields from the query 
         const removeFields = ['keyword', 'limit', 'page'];

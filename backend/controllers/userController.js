@@ -4,14 +4,14 @@ const User = require('../models/user');
 const storeToken = require('../utils/storeToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 
 //USERS.....
 
 //Create a new user         => /api/register
 const registerUser = async (req, res, next) => { 
-    
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+
+    const result = await cloudinary.uploader.upload(req.body.avatar, {
         folder: 'avatar',
         width: 150,
         crop: 'scale'
@@ -19,7 +19,7 @@ const registerUser = async (req, res, next) => {
     
     const { name, email, password } = req.body;
     
-    const user = await User.create({
+     user = await User.create({
         name,
         email,
         password,
@@ -60,11 +60,11 @@ const forgotPassword = async (req, res, next) => {
 
     //send a new password token to user
     const resetToken = user.getResetPasswordToken();
-    
+     
     await user.save({ validateBeforeSave: false });
     
     //Create reset password url
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/password/reset/${resetToken}`; 
+    const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`; 
 
     //Set the password reset email message for client 
     const message = `This is your password reset token: \n\n${resetUrl}\n\nIf you have not requested this email, then ignore it`
@@ -134,7 +134,7 @@ const getUserProfile = async (req, res, next) => {
 const updatePassword = async (req, res, next) => {
     const user = await User.findById(req.user.id).select('+password');
 
-    //Check for the old user password
+    //Check for the old user password 
     const isPasswordMatched = user.comparePassword(req.body.oldPassword);
 
     if(!isPasswordMatched) {
@@ -156,7 +156,24 @@ const updateUserProfile = async (req, res, next) => {
         email: req.body.email
     };
 
-    //Change user profile picture/avatar : WE SHALL GET TO THAT SHORTLY...
+    //update user avatar
+    if(req.body.avatar !== '') {
+        const user = await User.findById(req.user.id);
+ 
+        const image_id = user.avatar.public_id;
+        const res = cloudinary.uploader.destroy(image_id);
+
+        const result = await cloudinary.uploader.upload(req.body.avatar, {
+            folder: 'avatar',
+            width: 150,
+            crop: 'scale'
+        });
+
+        newUserProfile.avatar = {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    }
 
     const user = await User.findByIdAndUpdate(req.user.id, newUserProfile, {
         new: true,
@@ -246,7 +263,7 @@ const deleteUser = async (req, res, next) => {
 module.exports = {
     logoutUser,
     loginUser,
-    registerUser,
+    registerUser, 
     forgotPassword,
     resetPassword,
     getUserProfile,

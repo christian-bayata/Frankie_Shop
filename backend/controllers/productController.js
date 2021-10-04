@@ -2,7 +2,7 @@ require('express-async-errors');
 const Product = require('../models/products');
 const User = require('../models/user');
 const errorHandler = require('../utils/errorHandler'); 
-const APIFeatures = require('../utils/apiFeatures');
+const APIFeatures = require('../utils/apiFeatures'); 
 
 
 //Gets all the products in the database   =>    /api/products/

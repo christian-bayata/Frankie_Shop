@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 //USER................................................
 //Route for creating a new order    ==> /api/order/new
 const createOrder = async (req, res, next) => {
-     
+      
     const {     orderItems, 
                 shippingInfo, 
                 itemsPrice,

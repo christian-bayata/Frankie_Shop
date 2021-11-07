@@ -19,3 +19,35 @@
 - Integrated using all 3 environments: `development`, `testing`, and `production`.
 - Built with [npm scripts](#npm-scripts).
 - example for User model and User controller, with jwt authentication, simply type `npm run dev`.
+
+## Table of Content
+
+- [Install and Use](#install-and-use)
+- [Folder Structure](#folder-structure)
+- [Config](#config)
+- [Controllers](#controllers)
+  - [Create a Controller](#create-a-controller)
+- [Middlewares](#middlewares)
+  - [authUser.middleware](#authUserMiddleware)
+- [Models](#models)
+  - [Create a Model](#create-a-model)
+- [Routes](#routes)
+  - [Create Routes](#create-routes)
+- [npm Scripts](#npm-scripts)
+
+## Install and Use
+
+Begin by cloning this repository:
+
+```sh
+    #HTTPS
+    $ git clone https://github.com/christian-bayata/Frankie_Shop.git
+```
+
+then do this aferwards:
+
+```sh
+   #cd into the root Folder
+   $ npm install
+   $ npm run dev
+```

@@ -43,7 +43,7 @@
         }],
         "rating": "4.5",
         "category": "Cameras",
-        "seller": "Canon",
+        "seller": "Canon", 
         "stock": "1500",
         "noOfReviews": 200,
         "reviews": []

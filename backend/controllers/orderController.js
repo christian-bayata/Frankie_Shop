@@ -91,7 +91,7 @@ const updateOrder = async (req, res, next) => {
     };
     //Update the product and quantity available
     order.orderItems.forEach(async (item) => {
-        await updateStock(item.product, item.quantity)
+        await updateStock(item.product, item.quantity) 
     });
 
     order.orderStatus = req.body.orderStatus;

@@ -16,10 +16,10 @@ const { registerUser,
     } = require('../controllers/userController');
 
 const { isUserAuthenticated, isUserAuthorized } = require('../middlewares/authUser');
-
+ 
 router.route('/register').post(registerUser);
 
-router.route('/login').post(loginUser);
+router.route('/login').post(loginUser); 
 
 router.route('/password/forgot').post(forgotPassword)
 

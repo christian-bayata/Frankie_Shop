@@ -15,7 +15,7 @@ const isUserAuthenticated = async function(req, res, next) {
         return next()
     }
     catch(err) {
-        return next(new ErrorHandler('You are not authorized', 401))
+        return next(new ErrorHandler('You are not authorized', 401));
     }  
 };
 

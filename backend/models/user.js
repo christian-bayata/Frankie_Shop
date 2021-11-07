@@ -73,7 +73,7 @@ userSchema.methods.comparePassword = async function (password) {
 
 //Reset forgotten password using crypto 
 userSchema.methods.getResetPasswordToken = function() {
-    //Generate crypto token
+    //Generate crypto token 
     const resetToken = crypto.randomBytes(20).toString('hex');
 
     //Encrypt the token and set it to resetPasswordToken

@@ -5,7 +5,7 @@ const  {isUserAuthenticated, isUserAuthorized}  = require('../middlewares/authUs
 
 const { getProducts, 
         createProduct, 
-        getProductById, 
+        getProductById,  
         updateProduct, 
         deleteProduct, 
         createProductReview,

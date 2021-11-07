@@ -11,11 +11,6 @@ const cloudinary = require('cloudinary').v2;
 //Create a new user         => /api/register
 const registerUser = async (req, res, next) => { 
 
-    const result = await cloudinary.uploader.upload(req.body.avatar, {
-        folder: 'avatar',
-        width: 150,
-        crop: 'scale'
-    })
     
     const { name, email, password } = req.body;
     
@@ -24,8 +19,8 @@ const registerUser = async (req, res, next) => {
         email,
         password,
         avatar: {
-            public_id: result.public_id,
-            url: result.secure_url
+            public_id: "Products/1_3_adb542ad-6d55-46a7-8217-8b5ccc89123b_2048x2048_hlcayj.jpg",
+            url: "https://res.cloudinary.com/bayata/image/upload/v1630413918/Products/1_3_adb542ad-6d55-46a7-8217-8b5ccc89123b_2048x2048_hlcayj.jpg"
         }
     });
 
@@ -258,7 +253,7 @@ const deleteUser = async (req, res, next) => {
         success: true,
         message: `User with ID: ${req.params.id} is deleted`
     });
-};
+}; 
 
 module.exports = {
     logoutUser,

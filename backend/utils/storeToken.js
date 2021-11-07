@@ -8,6 +8,7 @@ const storeToken = (user, statusCode, res) => {
         expires: new Date(
             Date.now() + process.env.COOKIE_EXPIRATION_TIME * 24 * 60 * 60 * 1000
         ),
+  
         httpOnly: true
     }; 
 
@@ -17,5 +18,5 @@ const storeToken = (user, statusCode, res) => {
         user
     })
 }
-
+ 
 module.exports = storeToken;

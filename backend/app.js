@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');  
 const logger = require('./utils/logger');
-const dotenv = require('dotenv'); 
 const products = require('./routes/products');
 const user = require('./routes/user');
 const order = require('./routes/order');

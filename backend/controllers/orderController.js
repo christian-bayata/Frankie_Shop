@@ -13,7 +13,7 @@ const createOrder = async (req, res, next) => {
                 shippingInfo, 
                 itemsPrice,
                 taxPrice,
-                shippingPrice,
+                shippingPrice, 
                 totalPrice,
                 paymentInfo,
             } = req.body;

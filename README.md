@@ -51,3 +51,9 @@ then do this aferwards:
    $ npm install
    $ npm run dev
 ```
+
+## Folder Structure
+
+The codebase has the following directories:
+
+- config - for internal configurations, including environment variables and database setting

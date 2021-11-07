@@ -14,7 +14,9 @@ process.on('uncaughtException', (err) => {
 dotenv.config({ path: "backend/config/config.env" })
 
 //Set up the database connection
-dbConnect();
+let databaseURI = process.env.DB_LOCAL_URI;
+if(process.env.NODE_ENV === "test") databaseURI = process.env.DB_TEST_URI;
+dbConnect(databaseURI).then(() => true);
 
 //cloudinary configuration for images
 cloudinary.config({
@@ -25,7 +27,7 @@ cloudinary.config({
 
 const port = process.env.PORT;
 const environment = process.env.NODE_ENV;
-const server = app.listen(port, () => console.log(`Server is running on port ${port} in ${environment} mode`)); 
+let server = app.listen(port, () => console.log(`Server is running on port ${port} in ${environment} mode`));
 
 //Error handler for unhandled rejections
 process.on('unhandledRejection', (err) => {
@@ -33,5 +35,7 @@ process.on('unhandledRejection', (err) => {
     console.log('Shutting down due to unhandled rejections');
     server.close(() => {
         process.exit(1)
-    })
+    }) 
 });
+
+module.exports = server;

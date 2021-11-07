@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server.js",
-    "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server.js",
-    "seeder": "node backend/utils/seeder.js"
+    "dev": "SET NODE_ENV=development& nodemon backend/server.js",
+    "prod": "SET NODE_ENV=production& nodemon backend/server.js",
+    "seeder": "node backend/utils/seeder.js",
+    "test": "SET NODE_ENV=test& jest --watchAll --verbose --detectOpenHandles"
   },
-  "author": "",
+  "author": "Edomaruse Frank",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -28,6 +29,8 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.6"
   }
 }

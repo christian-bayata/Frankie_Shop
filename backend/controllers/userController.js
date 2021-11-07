@@ -4,18 +4,11 @@ const User = require('../models/user');
 const storeToken = require('../utils/storeToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary');
 
 //USERS.....
 
 //Create a new user         => /api/register
 const registerUser = async (req, res, next) => { 
-    
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'avatar',
-        width: 150,
-        crop: 'scale'
-    })
     
     const { name, email, password } = req.body;
     

@@ -24,7 +24,7 @@
 
 - [Install and Use](#install-and-use)
 - [Folder Structure](#folder-structure)
-- [Config](#config)
+- [Config](#Database)
 - [Controllers](#controllers)
   - [Create a Controller](#create-a-controller)
 - [Middlewares](#middlewares)
@@ -56,4 +56,41 @@ then do this aferwards:
 
 The codebase has the following directories:
 
-- config - for internal configurations, including environment variables and database setting
+- config - for internal configurations, including environment variables and database setting.
+- controllers - contains all the links between the routes and server for easy RESTful APIs.
+- middlewares - contains all middleware functions for authorization, authorization and error.
+- models - contains database schema definitions and models creation.
+- routes - contains all client requests that are handled by application endpoints.
+- utils - contains functions that are often used in the codebase.
+
+## Config
+
+Contains all internal system configurations, including the database connection.
+
+##Database
+
+> Note: if you use MongoDB, please ensure that mongodb server is running on the machine.
+> The code creates a connection to a database.
+> The "databaaseURI" works with environment variables that can
+
+```js
+const mongoose = require("mongoose");
+
+const dbConnect = async (databaseURI) => {
+  try {
+    await mongoose
+      .connect(databaseURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+      })
+      .then(() => console.log(`Database is connected to ${databaseURI}`));
+  } catch (err) {
+    console.log("Could not connect to the database", err);
+    process.exit(1);
+  }
+};
+
+module.exports = dbConnect;
+```

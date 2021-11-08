@@ -67,11 +67,11 @@ The codebase has the following directories:
 
 Contains all internal system configurations, including the database connection.
 
-##Database
+## Database
 
 > Note: if you use MongoDB, please ensure that mongodb server is running on the machine.
 > The code creates a connection to a database.
-> The "databaaseURI" works with environment variables that can
+> The "databaseURI" works with environment variables that can be seen in the app file
 
 ```js
 const mongoose = require("mongoose");
@@ -93,4 +93,163 @@ const dbConnect = async (databaseURI) => {
 };
 
 module.exports = dbConnect;
+```
+
+## controllers
+
+Contains all the code that serve as link between the server and routes. The naming convention it bears is usually "model name" plus "Controller",e.g: 'productController.js' in a camel-casing naming format.
+
+## Create a controller
+
+Here are snapshots of Controllers used for **CRUD** in the project:
+
+```js
+require("express-async-errors");
+const ErrorHandler = require("../utils/errorHandler");
+const User = require("../models/user");
+const storeToken = require("../utils/storeToken");
+const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
+
+//USERS.....
+
+//Create a new user         => /api/register
+const registerUser = async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    avatar: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    },
+  });
+
+  storeToken(user, 200, res);
+};
+
+//Route for logging in a user           => /api/login
+const loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  //Validate user input: email and password;
+  if (!email || !password) {
+    return next(new ErrorHandler("Please enter your email and password", 400));
+  }
+  // Check if the email exists in the database
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) return next(new ErrorHandler("Invalid email or password", 401));
+
+  //Check if the user entered a matching password or not
+  const matchingPassword = await user.comparePassword(password);
+  if (!matchingPassword)
+    return next(new ErrorHandler("Invalid email and password", 401));
+
+  storeToken(user, 200, res);
+};
+
+//Route for forgot password          ==> /api/password/forgot
+const forgotPassword = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user)
+    return next(new ErrorHandler("User with this email is not found", 404));
+
+  //send a new password token to user
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  //Create reset password url
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/password/reset/${resetToken}`;
+
+  //Set the password reset email message for client
+  const message = `This is your password reset token: \n\n${resetUrl}\n\nIf you have not requested this email, then ignore it`;
+
+  //The reset token email
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Frankie-Shop Password recovery",
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Recovery email sent to ${user.email}`,
+    });
+  } catch (err) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return next(new ErrorHandler(err.message, 500));
+  }
+};
+
+//Route for reset password          ==> /api/password/reset
+const resetPassword = async (req, res, next) => {
+  //hash the reset password token
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  //Check to see if user with this password exists
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user)
+    return next(
+      new ErrorHandler("Password reset token is invalid or has expired", 400)
+    );
+
+  //Confirm if the password matches
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler("Password does not match", 400));
+  }
+  //If password matches
+  user.password = req.body.password;
+
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+
+  await user.save();
+
+  storeToken(user, 200, res);
+};
+```
+
+# Middlewares
+
+Middlewares are functions are passed in between routes before making a request.
+For instance, this is a middleware that enables users login before getting access to any resource.
+
+```js
+require("express-async-errors");
+const ErrorHandler = require("../utils/errorHandler");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+
+const isUserAuthenticated = async function (req, res, next) {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return next(new ErrorHandler("Please login first", 401));
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_PRIVATEKEY);
+    req.user = await User.findById(decoded.id);
+    return next();
+  } catch (err) {
+    return next(new ErrorHandler("You are not authorized", 401));
+  }
+};
 ```

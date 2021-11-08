@@ -33,7 +33,6 @@
   - [Create a Model](#create-a-model)
 - [Routes](#routes)
   - [Create Routes](#create-routes)
-- [npm Scripts](#npm-scripts)
 
 ## Install and Use
 
@@ -95,9 +94,9 @@ const dbConnect = async (databaseURI) => {
 module.exports = dbConnect;
 ```
 
-## controllers
+## Controllers
 
-Contains all the code that serve as link between the server and routes. The naming convention it bears is usually "model name" plus "Controller",e.g: 'productController.js' in a camel-casing naming format.
+Contains all the code that serve as link between the server and routes. The naming convention it bears is usually `model name` plus `Controller`,e.g: `productController.js` in a camel-casing naming format.
 
 ## Create a controller
 
@@ -227,7 +226,7 @@ const resetPassword = async (req, res, next) => {
 };
 ```
 
-# Middlewares
+## Middlewares
 
 Middlewares are functions are passed in between routes before making a request.
 For instance, this is a middleware that enables users login before getting access to any resource.
@@ -253,3 +252,143 @@ const isUserAuthenticated = async function (req, res, next) {
   }
 };
 ```
+
+This middleware function is used on routes in this manner:
+
+```js
+const express = require("express");
+const router = express.Router();
+const mongoose = require("mongoose");
+
+const {
+  isUserAuthenticated,
+  isUserAuthorized,
+} = require("../middlewares/authUser");
+
+router.route("/me").get(isUserAuthenticated, getUserProfile);
+
+router.route("/password/update").put(isUserAuthenticated, updatePassword);
+
+router.route("/me/update").put(isUserAuthenticated, updateUserProfile);
+
+router
+  .route("/admin/users")
+  .get(isUserAuthenticated, isUserAuthorized("admin"), getAllUsers);
+
+router
+  .route("/admin/user/:id")
+  .get(isUserAuthenticated, isUserAuthorized("admin"), getUserDetails);
+
+router
+  .route("/admin/update/:id")
+  .put(isUserAuthenticated, isUserAuthorized("admin"), updateUser);
+
+router
+  .route("/admin/delete/:id")
+  .delete(isUserAuthenticated, isUserAuthorized("admin"), deleteUser);
+
+module.exports = router;
+```
+
+## Models
+
+We use [Mongoose](https://mongoosejs.com) to define our Models, and the naming convention is usually `Modelname.js`.
+For more information, check out the [Docs](https://mongoosejs.com/docs/guide.html).
+
+## Create a Model
+
+For instance, here is a user model below:
+
+```js
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    maxlength: [30, "Name cannot exceed 30 characters"],
+    required: true,
+  },
+  email: {
+    type: String,
+    validate: [validator.isEmail, "Please enter a valid email address"],
+    required: [true, "Please enter your email"],
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: [true, "Please enter your password"],
+    minlength: [6, "Password must be longer than 6 characters"],
+    select: false,
+  },
+  avatar: {
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
+  role: {
+    type: String,
+    default: "User",
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+});
+
+//Hash the password before storing it in the database
+userSchema.pre("save", async function save(next) {
+  try {
+    if (!this.isModified("password")) return next();
+
+    this.password = await bcrypt.hash(this.password, 10);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+//generate authentication token for registered user
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ id: this._id }, process.env.JWT_PRIVATEKEY, {
+    expiresIn: process.env.JWT_EXPIRATION_TIME,
+  });
+  return token;
+};
+
+//Compare password using bcrypt.compare
+userSchema.methods.comparePassword = async function (userPassword) {
+  return await bcrypt.compare(userPassword, this.password);
+};
+
+//Reset forgotten password using crypto
+userSchema.methods.getResetPasswordToken = function () {
+  //Generate crypto token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  //Encrypt the token and set it to resetPasswordToken
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  //Set the token expiry time to 30 mins
+  this.resetPasswordExpires = Date.now() + 30 * 60 * 1000;
+
+  return resetToken;
+};
+
+module.exports = mongoose.model("User", userSchema);
+```
+
+> Note: You can use custom mongoose validations (which I used) in your models, or you can use the npm package module, [Joi](https://joi.dev/api/?v=17.4.2).

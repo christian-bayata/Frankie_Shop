@@ -4,7 +4,7 @@ const dbConnect = require('../config/db');
 const productData = require('../data/product')
 
 //Set up the config file
-dotenv.config({ path: "backend/config/config.env" })
+dotenv.config({ path: "backend/config/config.env" }) 
 
 //Set up the database connection
 dbConnect();

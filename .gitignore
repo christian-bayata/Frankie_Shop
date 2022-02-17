@@ -1,2 +1,4 @@
-config.NODE_ENV
 node_modules
+backend/config/config.env
+frontend/
+backend/tests/

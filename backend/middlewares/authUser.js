@@ -9,7 +9,7 @@ const isUserAuthenticated = async function(req, res, next) {
     if(!token) {
         return next(new ErrorHandler('Please login first', 401))
     }
-    try {
+    try { 
         const decoded = jwt.verify(token, process.env.JWT_PRIVATEKEY);
         req.user = await User.findById(decoded.id);
         return next()

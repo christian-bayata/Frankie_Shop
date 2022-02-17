@@ -42,7 +42,7 @@ const orderSchema = new mongoose.Schema({
             price: {
                 type: Number,
                 required: true
-            },
+            }, 
             image: {
                 type: String,
                 required: true
@@ -61,7 +61,7 @@ const orderSchema = new mongoose.Schema({
         status: {
             type: String
         }
-    },
+    }, 
     paidAt: {
         type: Date
     },

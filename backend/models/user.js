@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
@@ -71,7 +71,7 @@ userSchema.methods.comparePassword = async function (userPassword) {
     return await bcrypt.compare(userPassword, this.password)
 };
 
-//Reset forgotten password using crypto 
+//Reset forgotten password using crypto  
 userSchema.methods.getResetPasswordToken = function() {
     //Generate crypto token
     const resetToken = crypto.randomBytes(20).toString('hex');
@@ -81,7 +81,7 @@ userSchema.methods.getResetPasswordToken = function() {
 
     //Set the token expiry time to 30 mins
     this.resetPasswordExpires = Date.now() + 30 * 60 * 1000;
-    
+     
     return resetToken;
 }
 
